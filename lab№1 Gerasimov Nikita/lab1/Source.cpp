@@ -31,17 +31,19 @@ void change() {
 void Menu(){
     cout << "1.Добавить трубу\
 		   \n2.Добавить КС\
-           \n3.Просмотр всех объектов\
-           \n4.Редактировать трубу\
-           \n5.Редактировать КС\
-           \n6.Сохранить\
-           \n7.Загрузить\
+           \n3.Просмотр всех объектов трубы\
+           \n4.Просмотр всех объектов КС\
+           \n5.Редактировать трубу\
+           \n6.Редактировать КС\
+           \n7.Сохранить\
+           \n8.Загрузить\
            \n0.Выход";
     cout << "\n\nВвод:\t";
 }
-
-int AddPipe(){
+ 
+int AddPipe(){                                                     //Создание новой трубыч  
     setlocale(LC_ALL, "ru");
+    Pipe AddTruba;
     int r;
     ofstream EditPipe;
     EditPipe.open("Даныне по Трубам.txt");
@@ -53,13 +55,21 @@ int AddPipe(){
         cout << "Введите число:\t" << endl;
         cin >> r;
         for (int i = 1; i <= r; i++) {
-            string a;
+            AddTruba.id;
             cout << "Введите id трубы " << i<<":\t";
-            cin >> a;
-            EditPipe << a << endl;
+            cin >> AddTruba.id;
+            cout << "\nВведите длину трубы" << endl;
+            cin >> AddTruba.lengh;
+            cout << "\nВвелмие диаметр трубы" << endl;
+            cin >> AddTruba.diameter;
+
+            
+            EditPipe << "ID Трубы: " << AddTruba.id << "\n" << endl;
+            EditPipe <<"Длина Трубы: "<< AddTruba.lengh << endl;
+            EditPipe << "Диаметр Трубы: " << AddTruba.diameter <<"\n"<< endl;
             
         }
-        cout << "\n" << endl;
+        cout << "\n" << endl; 
                
     }
     
@@ -68,27 +78,55 @@ int AddPipe(){
     return 0;
 }
 
-
-int AddCompressionStation() {
+                                       
+int AddCompressionStation() {                                      //Создание Новой КС
     setlocale(LC_ALL, "ru");
+    CompressionStation AddCS;
     ofstream EditCS;
     string b;
+    
     EditCS.open("Данные по КС.txt");
     if (!EditCS) {
         cout << "Файл не создался.";
     }
     else {
-       for (int i = 1; i < 2; i++) {
-           cout << "Ввод" << endl;
-           cin >> b;
-           EditCS << b << endl;
+       int t;
+       int u;
+       cout << "Сколько нужно добавить КС" << endl;
+       cout << "Введите число : ";
+       cin >> t;
+       for (int i = 1; i < t; i++) {
+           cout << "Введите новое ID КС: " ;
+           cin >> AddCS.id;
+           cout << "Ввдеите новое название КС:  ";
+           cin >> AddCS.name;
+           cout << "Введите Кол-во Цехов" << endl;
+           cin >> AddCS.NumberOfWorkShopsInOperation;
+           cout << "Введите Кол-во цехов в работе" << endl;
+           cin >> AddCS.NumberOfWorkShops;
+           if (AddCS.NumberOfWorkShopsInOperation < AddCS.NumberOfWorkShops) {
+               cout << "Рабочех цехов больше, чем общее кол-во цехов, введите другое значение" << endl;
+               while (AddCS.NumberOfWorkShopsInOperation < AddCS.NumberOfWorkShops){
+               cin >> AddCS.NumberOfWorkShops;
+              
+               }
+           }
+           else {
+               u = (AddCS.id + AddCS.NumberOfWorkShopsInOperation + AddCS.NumberOfWorkShops) / 3;
+               EditCS << "ID КС : " << AddCS.Eficiency << endl;
+               EditCS << "Название КС" << AddCS.name << endl;;
+               EditCS << "Кол-во Цехов : " << AddCS.NumberOfWorkShopsInOperation << endl;
+               EditCS << "Кол-во Рабочих Цехов : " << AddCS.NumberOfWorkShops << endl;
+               EditCS << u << endl;
+               EditCS << "\n" << endl;
+           }
         }
     }
-    EditCS.close();
+    
     return 0;
 }
 
-void ViewAllObject() {
+void ViewAllObjectPipe() {                         //Просмотреть все объекты из файла "Данные по трубам".
     ifstream fin;
     string path = ("Даныне по Трубам.txt");
     fin.open(path);
@@ -96,13 +134,29 @@ void ViewAllObject() {
         cout << "Ошибка открытия файла" << endl;
     }
     else {
-        cout << "Файл открыт" << endl;
+        cout << "Файл открыт\n" << endl;
         char ch;
         while (fin.get(ch)) {
-            cout << ch << "\n" << endl;
+            cout << ch;
         }
     }
 }
+void ViewAllObjectCS() {                            //Просмотр всех объектов из файла "Данные по КС".
+    ifstream CSView;
+    string documentsCS="Данные по КС.txt";
+    CSView.open(documentsCS);
+    if (!CSView.is_open()) {
+        cout << "Ошибка открытия файла" << endl;
+    }
+    else {
+        cout << "Файл открыт!\n" << endl;
+        char ch1;
+        while (CSView.get(ch1)) {
+            cout << ch1;
+        }
+
+    }
+} 
 
 
 int ChangePipe() {
@@ -175,9 +229,10 @@ int main() {
     int n;
     string a;
 
-     Menu();
+  
     
     while (run) {
+        Menu();
         cin >> n;
         
         
@@ -186,35 +241,35 @@ int main() {
         case 1:
             AddPipe();
             run = true;
-            Menu();
+            
             break;
         case 2:
             AddCompressionStation();
             break;
         case 3:
-            ViewAllObject();
+            ViewAllObjectPipe();
             run = true;
-            Menu();
             break;
         case 4:
-            ChangePipe();
+            ViewAllObjectCS();
             run = true;
-            Menu();
             break;
         case 5:
+            ChangePipe();
+            run = true;
+            break;
+        case 6:
 
             EditCompressionStation();
             run = true;
             cout << " " << endl;
-            Menu();
-            
-
+           
             break;
 
-        case 6:
-
-            break;
         case 7:
+
+            break;
+        case 8:
                
             break;
         case 0:
@@ -227,7 +282,6 @@ int main() {
             
             
             run = true;
-            Menu();
 
             break;
         }
