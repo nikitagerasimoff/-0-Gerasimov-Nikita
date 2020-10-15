@@ -24,52 +24,62 @@ struct Pipe {
 
 };
 
-void change() {
-    cout << "Введите изменения: ";
-}
+
+
 
 void Menu(){
     cout << "1.Добавить трубу\
 		   \n2.Добавить КС\
            \n3.Просмотр всех объектов трубы\
            \n4.Просмотр всех объектов КС\
-           \n5.Редактировать трубу\
-           \n6.Редактировать КС\
-           \n7.Сохранить\
-           \n8.Загрузить\
+           \n5.Загрузить\
            \n0.Выход";
     cout << "\n\nВвод:\t";
 }
+
+int proverka() {
+    int x; // Какая-то переменная
+    do {
+        cin.clear();
+        cin.ignore(1000, '\ n');
+        cin >> x;
+    } while (cin.fail());
+    return 0;
+}
  
-int AddPipe(){                                                     //Создание новой трубыч  
+int AddPipe(){                                                                   //Создание новой трубы
     setlocale(LC_ALL, "ru");
     Pipe AddTruba;
     int r;
     ofstream EditPipe;
-    EditPipe.open("Даныне по Трубам.txt");
+    
+    EditPipe.open("Даныне по Трубам.txt", ofstream::app);
     if (!EditPipe) {
         cout << "Ошибка открытия файла";
     }
     else {
         cout << "Сколько новых труб вы хотите внести в данные?" << endl;
-        cout << "Введите число:\t" << endl;
+        cout << "Введите число:\t";
         cin >> r;
+        
         for (int i = 1; i <= r; i++) {
             AddTruba.id;
-            cout << "Введите id трубы " << i<<":\t";
+            cout << "Введите id трубы " << i<<":\t";    
             cin >> AddTruba.id;
-            cout << "\nВведите длину трубы" << endl;
+            cout << "\nВведите длину трубы: ";
             cin >> AddTruba.lengh;
-            cout << "\nВвелмие диаметр трубы" << endl;
+            cout << "\nВведите диаметр трубы: ";
             cin >> AddTruba.diameter;
-
+                               
             
+           
             EditPipe << "ID Трубы: " << AddTruba.id << "\n" << endl;
             EditPipe <<"Длина Трубы: "<< AddTruba.lengh << endl;
             EditPipe << "Диаметр Трубы: " << AddTruba.diameter <<"\n"<< endl;
+            EditPipe << "-------------------------------------------------" << endl;
             
         }
-        cout << "\n" << endl; 
+        
                
     }
     
@@ -79,48 +89,51 @@ int AddPipe(){                                                     //Создание но
 }
 
                                        
-int AddCompressionStation() {                                      //Создание Новой КС
+int AddCompressionStation() {                                                      //Создание Новой КС
     setlocale(LC_ALL, "ru");
     CompressionStation AddCS;
     ofstream EditCS;
     string b;
     
-    EditCS.open("Данные по КС.txt");
+    EditCS.open("Данные по КС.txt",ofstream::app);
     if (!EditCS) {
         cout << "Файл не создался.";
     }
     else {
        int t;
-       int u;
+       int k;
        cout << "Сколько нужно добавить КС" << endl;
        cout << "Введите число : ";
        cin >> t;
-       for (int i = 1; i < t; i++) {
+       for (int i = 1; i <= t; i++) {
            cout << "Введите новое ID КС: " ;
            cin >> AddCS.id;
-           cout << "Ввдеите новое название КС:  ";
+           cout << "Введите новое название КС:  ";
            cin >> AddCS.name;
-           cout << "Введите Кол-во Цехов" << endl;
+           cout << "Введите Кол-во Цехов: ";
            cin >> AddCS.NumberOfWorkShopsInOperation;
            cout << "Введите Кол-во цехов в работе" << endl;
            cin >> AddCS.NumberOfWorkShops;
            if (AddCS.NumberOfWorkShopsInOperation < AddCS.NumberOfWorkShops) {
                cout << "Рабочех цехов больше, чем общее кол-во цехов, введите другое значение" << endl;
                while (AddCS.NumberOfWorkShopsInOperation < AddCS.NumberOfWorkShops){
+                   cout << "Введите другое кол-во цехов в работе: ";
                cin >> AddCS.NumberOfWorkShops;
               
                }
            }
-           else {
-               u = (AddCS.id + AddCS.NumberOfWorkShopsInOperation + AddCS.NumberOfWorkShops) / 3;
-               EditCS << "ID КС : " << AddCS.Eficiency << endl;
-               EditCS << "Название КС" << AddCS.name << endl;;
-               EditCS << "Кол-во Цехов : " << AddCS.NumberOfWorkShopsInOperation << endl;
-               EditCS << "Кол-во Рабочих Цехов : " << AddCS.NumberOfWorkShops << endl;
-               EditCS << u << endl;
-               EditCS << "\n" << endl;
-           }
+         
+               
+          
+           
         }
+       EditCS << "ID КС : " << AddCS.id << endl;
+       EditCS << "Название КС: " << AddCS.name << endl;;
+       EditCS << "Кол-во Цехов : " << AddCS.NumberOfWorkShopsInOperation << endl;
+       EditCS << "Кол-во Рабочих Цехов : " << AddCS.NumberOfWorkShops << endl;
+       EditCS <<"Эффективность: " <<  ((AddCS.id + AddCS.NumberOfWorkShopsInOperation + AddCS.NumberOfWorkShops) / 3)<<"%"<<endl;
+       EditCS << "-------------------------------------------------" << endl;
+       EditCS << "\n" << endl;
     }
     
     return 0;
@@ -157,67 +170,50 @@ void ViewAllObjectCS() {                            //Просмотр всех объектов из 
 
     }
 } 
-
-
-int ChangePipe() {
-    setlocale(LC_ALL, "ru");
-    int n;
-    Pipe truba;
-    cout << "1.Введите новое ID трубы" << endl;
-    cout << "2.Изменить длину трубу" << endl;
-    cout << "3.Изменить диаметр трубы" << endl;
-    cout << "4.Признак" << endl;
-    cout << "Ввод:\t";
-    cin >> n;
-    switch (n)
-    {
-    case 1:
-        change();
-        cin >> truba.id;
-        break;
-    case 2:
-        change();
-        cin >> truba.lengh;
-        break;
-    case 3:
-        change();
-        cin >> truba.diameter;
-        break;
-    case 4:
-        change();
-        cin >> truba.WorkingOrNotWorking;
-        break;
-    default:
-        break;
-    }
-
-    return 0;
-}
-
-int EditCompressionStation() {
-    setlocale(LC_ALL, "ru");
-    CompressionStation station;
-    int n;
-
-    cout << "1.Поменять ID "<<endl;
-    cout << "2.Поменять Назавание КС" << endl;
-    cin >> n;
+int loading() {
+    ifstream Loading;
+    string ld;
+    int otvet;
     
-    switch (n)
-    {
-    case 1:
-        cout << "Введите новое ID: " << endl;
-        cin >> station.NumberOfWorkShops;
-        cout << station.NumberOfWorkShops;
-        break;
-    case 2:
+    while (bool ok = true) {
+        cout << "Введите точный путь к .txt файлу: ";
+        cin >> ld;
+        Loading.open(ld);
         
-        cout << "Введите новое название КС" << endl;
-        cin >> station.name;
-        cout << station.name << endl;
-        break;
-    default:
-        break;
+
+        if (!Loading.is_open()) {
+            cout << "Файл не открылся" << endl;
+            ok = false;
+
+        }
+        else {
+            cout << "Файл успешно загружен\n" << endl;
+            cout << "Открыть файл?" << endl;
+            cout << "1. Открыть\
+                   \n2. Выход" << endl;
+            cout << "Ввод";
+            cin >> otvet;
+            if (otvet == 1) {
+                char ch3;
+                while (Loading.get(ch3)) {
+                    cout << ch3;
+                }
+                cout << "\n\n" << endl;
+                string h;
+                cout << "Выйти? " ;
+                cout << "нажмите на любую кнопку: " << endl;
+                cin >> h;
+               
+                return 0;
+                
+                
+            }
+            else {
+                return 0;
+            }
+            
+
+        }
     }
     return 0;
 }
@@ -254,23 +250,10 @@ int main() {
             ViewAllObjectCS();
             run = true;
             break;
+                       
         case 5:
-            ChangePipe();
+            loading();
             run = true;
-            break;
-        case 6:
-
-            EditCompressionStation();
-            run = true;
-            cout << " " << endl;
-           
-            break;
-
-        case 7:
-
-            break;
-        case 8:
-               
             break;
         case 0:
             run = false;
@@ -278,6 +261,8 @@ int main() {
             break;
 
         default:
+
+           
             cout << "Выберите Из придложенного в меню\n" << endl;
             
             
