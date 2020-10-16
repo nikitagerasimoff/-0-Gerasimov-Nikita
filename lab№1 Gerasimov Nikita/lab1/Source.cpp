@@ -37,15 +37,7 @@ void Menu(){
     cout << "\n\nВвод:\t";
 }
 
-int proverka() {
-    int x; // Какая-то переменная
-    do {
-        cin.clear();
-        cin.ignore(1000, '\ n');
-        cin >> x;
-    } while (cin.fail());
-    return 0;
-}
+
  
 int AddPipe(){                                                                   //Создание новой трубы
     setlocale(LC_ALL, "ru");
@@ -230,50 +222,54 @@ int main() {
     while (run) {
         Menu();
         cin >> n;
-        
-        
-        switch (n)
-        {
-        case 1:
-            AddPipe();
-            run = true;
-            
-            break;
-        case 2:
-            AddCompressionStation();
-            break;
-        case 3:
-            ViewAllObjectPipe();
-            run = true;
-            break;
-        case 4:
-            ViewAllObjectCS();
-            run = true;
-            break;
-                       
-        case 5:
-            loading();
-            run = true;
-            break;
-        case 0:
-            run = false;
-            
-            break;
-
-        default:
-
-           
-            cout << "Выберите Из придложенного в меню\n" << endl;
-            
-            
-            run = true;
-
-            break;
-        }
-     
-
     
-    }
+        if(cin.fail()){
+            cin.clear(); 
+            cin.ignore(32767, '\n'); 
+            cout << "Кажется вы ошиблись!\n" << endl;
+        }
+        else {
+            switch (n)
+            {
+            case 1:
+                AddPipe();
+                run = true;
 
+                break;
+            case 2:
+                AddCompressionStation();
+                break;
+            case 3:
+                ViewAllObjectPipe();
+                run = true;
+                break;
+            case 4:
+                ViewAllObjectCS();
+                run = true;
+                break;
+
+            case 5:
+                loading();
+                run = true;
+                break;
+            case 0:
+                run = false;
+
+                break;
+
+            default:
+
+
+                cout << "Выберите Из придложенного в меню\n" << endl;
+
+
+                run = true;
+
+                break;
+            }
+
+
+        }
+    }
     return 0;
 }
