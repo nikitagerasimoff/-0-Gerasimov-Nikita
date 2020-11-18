@@ -22,7 +22,7 @@ void wInput(string inf, int& n) {
 	do {
 		cin.clear();
 		cin.ignore(10000, '\n');
-		cout << "введите " << inf << endl;
+		cout << "Введите " << inf;
 		cin >> n;
 	} while (cin.fail());
 }
@@ -31,7 +31,7 @@ void wInput(string inf, float& n) {
 	do {
 		cin.clear();
 		cin.ignore(10000, '\n');
-		cout << "Введите " << inf << endl;
+		cout << "Введите " << inf;
 		cin >> n;
 	} while (cin.fail());
 }
@@ -95,17 +95,12 @@ Pipe EditPipe(Pipe& p)
 CompressionStation InputCS() 
 {
 	CompressionStation cs;
-	cout << "Введите ID: ";
 	wInput("ID ", cs.id);
 	cout << "Введите Название Компрессорной Станции: ";
 	cin >> cs.name;
 	wInput("Кол-во работающих станций: ", cs.NumberOfWorkShops);
 	wInput("общее кол-во Станций: ", cs.NumberOfWorkShopsInOperation);
-	cout << "Введите кол-во Работающих станций: ";
-	cin >> cs.NumberOfWorkShops;
-	cout << "Введите общее кол-во Станций: ";
-	cin >> cs.NumberOfWorkShopsInOperation;
-
+	
 	if (cs.NumberOfWorkShopsInOperation < cs.NumberOfWorkShops) {
 		cout << "Рабочех цехов больше, чем общее кол-во цехов, введите другое значение\n" << endl;
 		while (cs.NumberOfWorkShopsInOperation < cs.NumberOfWorkShops) {
@@ -119,8 +114,8 @@ CompressionStation InputCS()
 }
 
 void ShowCS(const CompressionStation& cs) {
-	cout << "ID КС: " << cs.id << cs.id << endl;
-	cout << "Название КС: " << cs.name << cs.name << endl;
+	cout << "ID КС: " << cs.id  << endl;
+	cout << "Название КС: " << cs.name << endl;
 	cout << "Кол-во работающих станций " << cs.NumberOfWorkShops << endl;
 	cout << "Общее кол-во станций " << cs.NumberOfWorkShopsInOperation << endl;
 	
@@ -131,6 +126,7 @@ void ShowCS(const CompressionStation& cs) {
 	else {
 		cout << "КС не активна" << endl;
 	}
+	cout << "\n\n" << endl;
 }
 
 CompressionStation EditCS(CompressionStation& cs) 
