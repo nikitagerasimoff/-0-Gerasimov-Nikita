@@ -18,15 +18,30 @@ struct CompressionStation {
 	bool launch;
 };
 
+void wInput(string inf, int& n) {
+	do {
+		cin.clear();
+		cin.ignore(10000, '\n');
+		cout << "введите " << inf << endl;
+		cin >> n;
+	} while (cin.fail());
+}
+
+void wInput(string inf, float& n) {
+	do {
+		cin.clear();
+		cin.ignore(10000, '\n');
+		cout << "Введите " << inf << endl;
+		cin >> n;
+	} while (cin.fail());
+}
+
 Pipe InputPipe()					
 {
 	Pipe p;
-	cout << "Input lenght: ";
-	cin >> p.lenght;
-	cout << "Input diamter: ";
-	cin >> p.diameter;
-	cout << "Input ID: ";
-	cin >> p.ID;
+	wInput("длину ", p.lenght);
+	wInput("диаметр ", p.diameter);
+	wInput("ID ", p.ID);
 	p.repair = true; \
 		cout << "\n\n" << endl;
 	return p;
@@ -81,9 +96,11 @@ CompressionStation InputCS()
 {
 	CompressionStation cs;
 	cout << "Введите ID: ";
-	cin >> cs.id;
-	cout << "Введите Название Компрессорной Станции: " ;
+	wInput("ID ", cs.id);
+	cout << "Введите Название Компрессорной Станции: ";
 	cin >> cs.name;
+	wInput("Кол-во работающих станций: ", cs.NumberOfWorkShops);
+	wInput("общее кол-во Станций: ", cs.NumberOfWorkShopsInOperation);
 	cout << "Введите кол-во Работающих станций: ";
 	cin >> cs.NumberOfWorkShops;
 	cout << "Введите общее кол-во Станций: ";
@@ -121,7 +138,7 @@ CompressionStation EditCS(CompressionStation& cs)
 	int n;
 	cout << "\n";
 	cout << "1.КС запущена\n2.КС не запущена" << endl;
-	cout << "Ввод:";
+	cout << "Ввод: ";
 	cin >> n;
 	if (n == 1) {
 		cs.launch = true;
@@ -129,35 +146,15 @@ CompressionStation EditCS(CompressionStation& cs)
 	else if (n == 2) {
 		cs.launch == false;
 	}
+
 	return cs;
 }
 //----------------------------------------------------------------------------------------------
-void Save(Pipe p, CompressionStation cs)
-{
-	ofstream fout;
-	fout.open("Pipe_CS.txt", ios::out);
-	if (fout.is_open()) {
-		fout << p.ID << endl;
-		fout << p.lenght << endl;
-		fout << p.diameter << endl;
-		fout << p.repair << endl;
-
-		fout << cs.id << endl;
-		fout << cs.name << endl;
-		fout << cs.id << endl;
-		fout << cs.NumberOfWorkShops << endl;
-		fout << cs.NumberOfWorkShopsInOperation;
-		fout.close();
-	}
-	else {
-		cout << "Файл не создан!" << endl;
-	}
-}
 
 void save(Pipe p, CompressionStation cs)
 {
 	ofstream fout;
-	fout.open("results.txt", ios::out);
+	fout.open("Pipe_CS.txt", ios::out);
 	if (fout.is_open()) {
 		fout << p.ID << endl;
 		fout << p.lenght << endl;
@@ -191,7 +188,6 @@ void Load(Pipe& p, CompressionStation& cs)
 	
 }
 
-
 	int main() {
 		setlocale(LC_ALL, "ru");
 		int n;
@@ -205,8 +201,10 @@ void Load(Pipe& p, CompressionStation& cs)
 					\n4.Создать КС\
 					\n5.Просмотр всех объектов КС\
 					\n6.Редактировать КС\
-	\n7.Загрузить файл\
-	\n8.Открыть файл" << endl;
+				    \n7.Сохранить файл\
+					\n8.Загрузить файл\
+					\n0.Exit" << endl;
+
 			cout << "Ввод: ";
 			cin >> n;
 			while (cin.fail()) {
@@ -258,10 +256,12 @@ void Load(Pipe& p, CompressionStation& cs)
 				save(pipe, cs);
 				run = true;
 				break;
-			case (0): {
+			}
+			case (0): 
+			{
 				run = false;
 			}
-			}
+			
 			default:
 				break;
 			}
