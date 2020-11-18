@@ -18,33 +18,6 @@ struct CompressionStation {
 	bool launch;
 };
 
-int getValue(int left, int right) {
-	int i;
-	cin >> i;
-	while (cin.fail() || i < left || i > right) {
-		cin.clear();
-		cin.ignore(10000, '\n');
-		cout << "Повторите Ввод" << endl;
-		cin >> i;
-	}
-	cin.ignore(10000, '\n');
-	return i;
-}
-
-double getValue(double left, double right) {
-	double i;
-	cin >> i;
-	while (cin.fail() || i < left || i > right) {
-		cin.clear();
-		cin.ignore(10000, '\n');
-		cout << "Повторите Ввод" << endl;
-		cin >> i;
-	}
-	cin.ignore(10000, '\n');
-	return i;
-}
-
-
 Pipe InputPipe()					
 {
 	Pipe p;
@@ -236,6 +209,12 @@ void Load(Pipe& p, CompressionStation& cs)
 	\n8.Открыть файл" << endl;
 			cout << "Ввод: ";
 			cin >> n;
+			while (cin.fail()) {
+				cin.clear();
+				cin.ignore(10000, '\n');
+				cout << "Выберите действие:" << endl;
+				cin >> n;
+			}
 			switch (n)
 			{
 			case(1): 
